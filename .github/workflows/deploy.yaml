@@ -1,8 +1,6 @@
 name: github pages deploy
 
-on:
-  push:
-    tags: ["*"]
+on: [push]
 
 jobs:
   build-deploy:
