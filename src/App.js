@@ -53,6 +53,7 @@ function App() {
     <>
       <LocalStorageInput label="InfluxDB URL" />
       <PoseNet
+        className="vh-100"
         frameRate={1}
         modelConfig={modelConfig}
         onEstimate={onEstimate}
