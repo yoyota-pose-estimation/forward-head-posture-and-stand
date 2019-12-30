@@ -1,12 +1,9 @@
 name: github pages deploy
 
-on:
-  push:
-    tags: ["*"]
+on: [push]
 
 jobs:
   build-deploy:
-    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
