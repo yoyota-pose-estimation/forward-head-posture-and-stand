@@ -42,10 +42,12 @@ function onEstimate(poses, date) {
 
   const ear = keypointsObject[`${direction}Ear`]
   const hip = keypointsObject[`${direction}Hip`]
-  if (!ear || !hip) return
+  const knee = keypointsObject[`${direction}Knee`]
+  if (!ear || !hip || !knee) return
 
   const distance = direction === "left" ? ear.x - hip.x : hip.x - ear.x
-  writeDistance(distance, date)
+  writeDistance("forward_head_posture", distance, date)
+  writeDistance("stand", Math.abs(knee.x - hip.x), date)
 }
 
 function App() {
