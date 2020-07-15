@@ -12,7 +12,7 @@ jobs:
           node-version: 12.x
       - run: npm ci
       - run: npm run build
-      - run: echo "forward-head-posture.yoyota.dev" > ./build/CNAME
+      - run: echo "forward-head-posture-and-stand.yoyota.dev" > ./build/CNAME
       - name: deploy
         uses: peaceiris/actions-gh-pages@v2
         env:
