@@ -1,10 +1,38 @@
-import React from "react"
+import React, { useState } from "react"
 import PoseNet from "@react-posenet/time"
+import { Button } from "react-bootstrap"
 import LocalStorageInput from "./components/LocalStorageInput"
 import { writeDistance } from "./util"
 
 const width = 600
 const height = 500
+
+function App() {
+  const [stop, setStop] = useState(false)
+  function handleClick() {
+    setStop(prev => !prev)
+  }
+  return (
+    <>
+      <LocalStorageInput label="InfluxDB URL" />
+      <Button size="lg" block onClick={handleClick}>
+        {stop ? "start" : "stop"}
+      </Button>
+      {stop ? (
+        <div />
+      ) : (
+        <PoseNet
+          className="vh-100"
+          frameRate={1}
+          modelConfig={modelConfig}
+          onEstimate={onEstimate}
+          width={width}
+          height={height}
+        />
+      )}
+    </>
+  )
+}
 
 const modelConfig = {
   architecture: "ResNet50",
@@ -48,22 +76,6 @@ function onEstimate(poses, date) {
   const distance = direction === "left" ? ear.x - hip.x : hip.x - ear.x
   writeDistance("forward_head_posture", distance, date)
   writeDistance("stand", Math.abs(knee.x - hip.x), date)
-}
-
-function App() {
-  return (
-    <>
-      <LocalStorageInput label="InfluxDB URL" />
-      <PoseNet
-        className="vh-100"
-        frameRate={0.9}
-        modelConfig={modelConfig}
-        onEstimate={onEstimate}
-        width={width}
-        height={height}
-      />
-    </>
-  )
 }
 
 export default App
